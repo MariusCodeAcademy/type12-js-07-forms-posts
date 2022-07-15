@@ -29,7 +29,7 @@ function makePostToHtml(post, dest) {
   const artEl = document.createElement('div');
   artEl.className = 'post card';
   artEl.innerHTML = `
-    <img src="${post.image}" alt="paveikslelis">
+    <img src="${post.image}" alt="${post.title}">
     <h3 class="post__title">${post.title}</h3>
     <h4 class="post__author">Autorius: ${post.author}</h4>
     <p class="post__date">${post.date}</p>
@@ -38,4 +38,24 @@ function makePostToHtml(post, dest) {
   dest.append(artEl);
 }
 
-const postInnerEls = [['img', '', [['src', '']]]];
+const postsArr = [
+  {
+    title: 'Html',
+    image: 'https://picsum.photos/id/1016/1000/800',
+    date: '2022-05-18',
+    author: 'Severijus ',
+    body: 'Html is the structure',
+  },
+  {
+    title: 'Css',
+    image: 'https://picsum.photos/id/1013/1000/800',
+    date: '2021-05-18',
+    author: 'James bond ',
+    body: 'Css is the design',
+  },
+];
+
+makePostToHtml(postsArr[0], postsContainerEl);
+makePostToHtml(postsArr[1], postsContainerEl);
+
+// loclasstorage
