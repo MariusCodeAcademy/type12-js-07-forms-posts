@@ -9,6 +9,14 @@ const authorEl = document.getElementById('author');
 const bodyEl = document.getElementById('body');
 const postsContainerEl = document.querySelector('.posts-container');
 
+const postsArrJsonVersion = localStorage.getItem('postsArr');
+console.log('postsArrJsonVersion ===', postsArrJsonVersion);
+// JSON.parse() - pavercia is Json i javascript
+// jei localStorage nera issaugota arba istrinta postsArr tada nustatom postsArr = []
+const postsArr = postsArrJsonVersion === null ? [] : JSON.parse(postsArrJsonVersion);
+
+render();
+
 createFormEl.addEventListener('submit', function (event) {
   event.preventDefault();
 
@@ -21,7 +29,9 @@ createFormEl.addEventListener('submit', function (event) {
     body: bodyEl.value,
   };
   console.log('newPostObj ===', newPostObj);
-  makePostToHtml(newPostObj, postsContainerEl);
+  // makePostToHtml(newPostObj, postsContainerEl);
+  postsArr.push(newPostObj);
+  render();
   createFormEl.reset();
 });
 
@@ -38,24 +48,18 @@ function makePostToHtml(post, dest) {
   dest.append(artEl);
 }
 
-const postsArr = [
-  {
-    title: 'Html',
-    image: 'https://picsum.photos/id/1016/1000/800',
-    date: '2022-05-18',
-    author: 'Severijus ',
-    body: 'Html is the structure',
-  },
-  {
-    title: 'Css',
-    image: 'https://picsum.photos/id/1013/1000/800',
-    date: '2021-05-18',
-    author: 'James bond ',
-    body: 'Css is the design',
-  },
-];
-
-makePostToHtml(postsArr[0], postsContainerEl);
-makePostToHtml(postsArr[1], postsContainerEl);
+function render() {
+  // isvalyti containeri
+  postsContainerEl.innerHTML = '';
+  // irasyti i localStorage
+  localStorage.setItem('postsArr', JSON.stringify(postsArr));
+  for (let i = 0; i < postsArr.length; i++) {
+    makePostToHtml(postsArr[i], postsContainerEl);
+  }
+}
 
 // loclasstorage
+// localStorage.setItem('postsArr', 'something something');
+
+// const postsArrFromLocalStorage = localStorage.getItem('postsArr');
+// console.log('postsArrFromLocalStorage ===', postsArrFromLocalStorage);
